@@ -25,8 +25,8 @@ node_modules
 dist
 assets/**/*.css
 build
-lib
-es
+#lib for github
+#es for github
 coverage
 yarn.lock
 package-lock.json
