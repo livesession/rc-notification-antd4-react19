@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import Notification from '../src';
 import { NotificationInstance } from '../src/Notification';
@@ -6,7 +6,7 @@ import { NotificationInstance } from '../src/Notification';
 require('../assets/index.less');
 
 async function timeout(delay = 0) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(resolve, delay);
   });
 }
@@ -24,7 +24,7 @@ describe('Notification.Hooks', () => {
           wrapper = mount(<div>{node}</div>);
         },
       } as any,
-      notification => {
+      (notification) => {
         instance = notification;
       },
     );

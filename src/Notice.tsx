@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import { Component } from 'react';
+import { createPortal } from 'react-dom';
 import classNames from 'classnames';
 
 interface DivProps extends React.HTMLProps<HTMLDivElement> {
@@ -81,16 +82,8 @@ export default class Notice extends Component<NoticeProps> {
   }
 
   render() {
-    const {
-      prefixCls,
-      className,
-      closable,
-      closeIcon,
-      style,
-      onClick,
-      children,
-      holder,
-    } = this.props;
+    const { prefixCls, className, closable, closeIcon, style, onClick, children, holder } =
+      this.props;
     const componentClass = `${prefixCls}-notice`;
     const dataOrAriaAttributeProps = Object.keys(this.props).reduce(
       (acc: { [key: string]: string }, key: string) => {
@@ -122,7 +115,7 @@ export default class Notice extends Component<NoticeProps> {
     );
 
     if (holder) {
-      return ReactDOM.createPortal(node, holder);
+      return createPortal(node, holder);
     }
 
     return node;

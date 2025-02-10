@@ -1,5 +1,7 @@
-import React, { Component, ReactText } from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import { Component, Key } from 'react';
+
+import { createRoot } from 'react-dom/client';
 import classNames from 'classnames';
 import { CSSMotionList } from 'rc-motion';
 import createChainedFunction from 'rc-util/lib/createChainedFunction';
@@ -88,9 +90,9 @@ class Notification extends Component<NotificationProps, NotificationState> {
     const key = originNotice.key || getUuid();
     const notice = { ...originNotice, key };
     const { maxCount } = this.props;
-    this.setState(previousState => {
+    this.setState((previousState) => {
       const { notices } = previousState;
-      const noticeIndex = notices.map(v => v.notice.key).indexOf(key);
+      const noticeIndex = notices.map((v) => v.notice.key).indexOf(key);
       const updatedNotices = notices.concat();
       if (noticeIndex !== -1) {
         updatedNotices.splice(noticeIndex, 1, { notice, holderCallback });
@@ -123,10 +125,10 @@ class Notification extends Component<NotificationProps, NotificationState> {
   };
 
   noticePropsMap: Record<
-    React.Key,
+    any,
     {
       props: NoticeProps & {
-        key: ReactText;
+        key: any;
       };
       holderCallback?: HolderReadyCallback;
     }
@@ -154,11 +156,11 @@ class Notification extends Component<NotificationProps, NotificationState> {
         onClose,
         onClick: notice.onClick,
         children: notice.content,
-      } as NoticeProps & { key: ReactText };
+      } as NoticeProps & { key: any };
 
       // Give to motion
       noticeKeys.push(key);
-      this.noticePropsMap[key] = { props: noticeProps, holderCallback };
+      this.noticePropsMap[key as any] = { props: noticeProps, holderCallback };
     });
 
     return (
@@ -168,7 +170,7 @@ class Notification extends Component<NotificationProps, NotificationState> {
           motionName={this.getTransitionName()}
           onVisibleChanged={(changedVisible, { key }) => {
             if (!changedVisible) {
-              delete this.noticePropsMap[key];
+              delete this.noticePropsMap[key as any];
             }
           }}
         >
@@ -180,7 +182,7 @@ class Notification extends Component<NotificationProps, NotificationState> {
                   key={key}
                   className={classNames(motionClassName, `${prefixCls}-hook-holder`)}
                   style={{ ...motionStyle }}
-                  ref={div => {
+                  ref={(div) => {
                     if (typeof key === 'undefined') {
                       return;
                     }
@@ -213,6 +215,8 @@ class Notification extends Component<NotificationProps, NotificationState> {
 Notification.newInstance = function newNotificationInstance(properties, callback) {
   const { getContainer, ...props } = properties || {};
   const div = document.createElement('div');
+  const root = createRoot(div);
+
   if (getContainer) {
     const root = getContainer();
     root.appendChild(div);
@@ -234,7 +238,7 @@ Notification.newInstance = function newNotificationInstance(properties, callback
       },
       component: notification,
       destroy() {
-        ReactDOM.unmountComponentAtNode(div);
+        root.unmount();
         if (div.parentNode) {
           div.parentNode.removeChild(div);
         }
@@ -253,7 +257,7 @@ Notification.newInstance = function newNotificationInstance(properties, callback
     return;
   }
 
-  ReactDOM.render(<Notification {...props} ref={ref} />, div);
+  root.render(<Notification {...props} ref={ref} />);
 };
 
 export default Notification;

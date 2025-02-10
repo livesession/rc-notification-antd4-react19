@@ -35,9 +35,9 @@
   "module": "es/index",
   "scripts": {
     "start": "cross-env NODE_ENV=development father doc dev --storybook",
-    "build": "father doc build --storybook",
-    "compile": "father build && lessc assets/index.less assets/index.css",
-    "prepublishOnly": "npm run compile && np --yolo --no-publish",
+    "build:storybook": "father doc build --storybook",
+    "build": "father build && lessc assets/index.less assets/index.css",
+    "prepublishOnly": "npm run build && np --yolo --no-publish",
     "lint": "eslint src/ examples/ --ext .tsx,.ts,.jsx,.js",
     "test": "father test",
     "now-build": "npm run build"
@@ -50,8 +50,8 @@
     "@types/classnames": "^2.2.10",
     "@types/enzyme": "^3.10.7",
     "@types/jest": "^26.0.4",
-    "@types/react": "^16.9.34",
-    "@types/react-dom": "^16.9.7",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "cross-env": "^7.0.0",
     "enzyme": "^3.3.0",
     "enzyme-to-json": "^3.4.0",
@@ -59,8 +59,8 @@
     "father": "^2.13.2",
     "less": "^3.10.3",
     "np": "^6.0.0",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "typescript": "^3.7.5"
   },
   "dependencies": {

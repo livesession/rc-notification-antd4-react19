@@ -1,6 +1,8 @@
 # rc-notification
 ---
 
+> NOTE: storybook and other stuff may not work - it's only a fix to work with React 19 and antd 4
+
 React Notification UI Component
 
 [![NPM version][npm-image]][npm-url]
